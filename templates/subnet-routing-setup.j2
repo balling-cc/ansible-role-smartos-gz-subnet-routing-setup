@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. /lib/svc/share/smf_include.sh
+
+dladm create-vnic -l {{ smartos_gz_subnet_routing_nic }} {{ smartos_gz_subnet_routing_vnic }}
+ifconfig {{ smartos_gz_subnet_routing_vnic }} plumb {{ smartos_gz_subnet_routing_ip }} netmask {{ smartos_gz_subnet_routing_netmask }} up
+svcadm enable ipv4-forwarding
+svcadm enable route
+
+exit $SMF_EXIT_OK

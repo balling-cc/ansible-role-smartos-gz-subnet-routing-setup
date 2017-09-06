@@ -1,0 +1,29 @@
+---
+- name: Create /opt/custom/scripts directory
+  file: path=/opt/custom/scripts state=directory
+
+- name: Create /opt/custom/smf directory
+  file: path=/opt/custom/smf state=directory
+
+- name: Copy subnet routing script
+  template:
+    src: subnet-routing-setup.j2
+    dest: /opt/custom/scripts/subnet-routing-setup
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy SMF manifest
+  template:
+    src: subnet-routing-setup.xml.j2
+    dest: /opt/custom/smf/subnet-routing-setup.xml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Import SMF manifest
+  raw: 'svccfg import /opt/custom/smf/subnet-routing-setup.xml'
+
+- name: Enable subnet routing
+  service: name=subnet-routing-setup state=restarted
+

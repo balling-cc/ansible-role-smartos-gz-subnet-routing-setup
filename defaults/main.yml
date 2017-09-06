@@ -1,0 +1,16 @@
+---
+#
+# If the subnet is *statically routed* to your server's main IP, then the
+# first address (e.g. x.x.x.200 for subnet x.x.x.200/29) is used to identify
+# the network, and the last address (x.x.x.207) is used for broadcast.
+# A vnic in the global zone must act as a router for the subnet.
+#
+# Traffic goes to x.x.x.200, and a vnic on x.x.x.201 routes traffic to the
+# subnet.
+#
+# So the routing (vnic) IP for a x.x.x.200/29 subnet is x.x.x.201
+#
+smartos_gz_subnet_routing_nic: e1000
+smartos_gz_subnet_routing_vnic: vnic0
+smartos_gz_subnet_routing_ip: x.x.x.201
+smartos_gz_subnet_routing_netmask: 255.255.255.248
